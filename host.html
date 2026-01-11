@@ -994,21 +994,22 @@ function renderCounts(){
 }
 
 function updateLinks(){
-  const join = new URL(location.href);
-  join.pathname = join.pathname.replace(/host\.html$/i,"join.html");
+  const base = location.origin + location.pathname.replace(/\/[^\/]*$/, "/");
+
+  const join = new URL(base + "join.html");
   join.searchParams.set("room", currentRoomId());
   join.searchParams.set("session", host.session);
 
-  const tvu = new URL(location.href);
-  tvu.pathname = tvu.pathname.replace(/host\.html$/i,"tv.html");
-  tvu.searchParams.set("room", currentRoomId());
-  tvu.searchParams.set("session", host.session);
-  tvu.searchParams.set("venue", host.activeBarId);
+  const tv = new URL(base + "tv.html");
+  tv.searchParams.set("room", currentRoomId());
+  tv.searchParams.set("session", host.session);
+  tv.searchParams.set("venue", host.activeBarId);
 
   $("joinLink").textContent = join.toString();
-  $("tvLink").textContent = tvu.toString();
+  $("tvLink").textContent   = tv.toString();
+
   $("sessionPill").textContent = host.session;
-  $("roomPill").textContent = currentRoomId();
+  $("roomPill").textContent    = currentRoomId();
 }
 
 function renderAll(){
@@ -1283,4 +1284,3 @@ init();
 </script>
 </body>
 </html>
-
